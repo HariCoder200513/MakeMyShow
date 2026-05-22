@@ -18,18 +18,16 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 export const authRoutes = Router();
 
 const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
+  windowMs: 1 * 60 * 1000, // 1 minute
   limit: 15,
   message: { error: 'Too many auth requests, please try again later.' }
 });
 
-authRoutes.use(authLimiter);
-
 authRoutes.get('/me', authMiddleware, (req, res) => {
   res.json({ user: req.user });
 });
-authRoutes.post('/register/options', validate(registerOptionsSchema), asyncHandler(registrationOptions));
-authRoutes.post('/register/verify', validate(registerVerifySchema), asyncHandler(verifyRegistrationResponse));
-authRoutes.post('/login/options', validate(loginOptionsSchema), asyncHandler(loginOptions));
-authRoutes.post('/login/verify', validate(loginVerifySchema), asyncHandler(verifyLoginResponse));
+authRoutes.post('/register/options', authLimiter, validate(registerOptionsSchema), asyncHandler(registrationOptions));
+authRoutes.post('/register/verify', authLimiter, validate(registerVerifySchema), asyncHandler(verifyRegistrationResponse));
+authRoutes.post('/login/options', authLimiter, validate(loginOptionsSchema), asyncHandler(loginOptions));
+authRoutes.post('/login/verify', authLimiter, validate(loginVerifySchema), asyncHandler(verifyLoginResponse));
 authRoutes.post('/logout', logout);

@@ -25,7 +25,7 @@ export function createApp() {
   app.use(cors({ origin: env.clientOrigin, credentials: true }));
   app.use(cookieParser());
   app.use(express.json({ limit: '1mb' }));
-  app.use(rateLimit({ windowMs: 15 * 60 * 1000, limit: 300 }));
+  app.use(rateLimit({ windowMs: 1 * 60 * 1000, limit: 300 }));
 
   app.get('/health', (_req, res) => res.json({ ok: true }));
   app.use('/auth', authRoutes);
