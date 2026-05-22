@@ -25,9 +25,9 @@ export function createApp() {
     contentSecurityPolicy: {
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-        "script-src": ["'self'", "'unsafe-inline'", "https://checkout.razorpay.com"],
-        "frame-src": ["'self'", "https://api.razorpay.com", "https://checkout.razorpay.com"],
-        "connect-src": ["'self'", "wss:", "https://api.razorpay.com", "https://checkout.razorpay.com"],
+        "script-src": ["'self'", "'unsafe-inline'", "https://checkout.razorpay.com", "https://*.razorpay.com"],
+        "frame-src": ["'self'", "https://api.razorpay.com", "https://checkout.razorpay.com", "https://*.razorpay.com"],
+        "connect-src": ["'self'", "wss:", "https://api.razorpay.com", "https://checkout.razorpay.com", "https://*.razorpay.com"],
         "img-src": ["'self'", "data:", "blob:", "https:"]
       }
     }
