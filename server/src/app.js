@@ -41,7 +41,7 @@ export function createApp() {
   // In production, serve the built React client
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(clientDist));
-    app.get('*', (_req, res) => {
+    app.get('{*splat}', (_req, res) => {
       res.sendFile(path.join(clientDist, 'index.html'));
     });
   }
