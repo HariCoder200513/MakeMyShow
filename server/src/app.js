@@ -21,7 +21,17 @@ const clientDist = path.join(__dirname, '../../client/dist');
 export function createApp() {
   const app = express();
 
-  app.use(helmet());
+  app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "script-src": ["'self'", "'unsafe-inline'", "https://checkout.razorpay.com"],
+        "frame-src": ["'self'", "https://api.razorpay.com", "https://checkout.razorpay.com"],
+        "connect-src": ["'self'", "wss:", "https://api.razorpay.com", "https://checkout.razorpay.com"],
+        "img-src": ["'self'", "data:", "blob:", "https:"]
+      }
+    }
+  }));
   app.use(cors({ origin: env.clientOrigin, credentials: true }));
   app.use(cookieParser());
   app.use(express.json({ limit: '1mb' }));
