@@ -35,12 +35,15 @@ export function createApp() {
   app.use('/shows', showRoutes);
   app.use('/bookings', bookingRoutes);
   app.use('/payments', paymentRoutes);
-
-  app.use(errorHandler);
-
   // In production, serve the built React client
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(clientDist));
+  }
+
+  app.use(errorHandler);
+
+  // Catch-all: serve index.html for client-side routing (must be after errorHandler)
+  if (process.env.NODE_ENV === 'production') {
     app.get('{*splat}', (_req, res) => {
       res.sendFile(path.join(clientDist, 'index.html'));
     });
