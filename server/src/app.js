@@ -30,7 +30,8 @@ export function createApp() {
         "connect-src": ["'self'", "wss:", "https://api.razorpay.com", "https://checkout.razorpay.com", "https://*.razorpay.com"],
         "img-src": ["'self'", "data:", "blob:", "https:"]
       }
-    }
+    },
+    crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" }
   }));
   app.use(cors({ origin: env.clientOrigin, credentials: true }));
   app.use(cookieParser());
